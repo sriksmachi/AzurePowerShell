@@ -31,7 +31,7 @@
 #         -subscriptionName "[SubscriptionName]" 
 #          -publishSettingsFilePath "[Publish Settins File Path]";
 #
-# AUTHOR: srikanth@brainscale.com /srikanthma@live.com
+# AUTHOR: vishwanath.srikanth@gmail.com /srikanthma@live.com
 # EXAMPLE
 #D:\CloneVM.ps1 -sourceVMName 'sourcevmname' -sourceCloudServiceName 'sourcecloudservicename' -sourceStorageAccount 'source storage account name' -targetVMName 'target vm name' `
 # -targetCloudServiceName 'target cloud service name' -targetStorageAccountName 'target storage account name' -targetlocation 'target location ex:East US'`

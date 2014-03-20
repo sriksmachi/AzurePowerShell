@@ -37,5 +37,7 @@
 # -targetCloudServiceName 'target cloud service name' -targetStorageAccountName 'target storage account name' -targetlocation 'target location ex:East US'`
 # -targetStorageAccountContainer 'target storage account container, ex:vhds' -subscriptionName "name of the subscription to use" -sourceStorageAccountContainer 'source storage account container, ex: vhds' `
 # -publishSettingsFilePath "*.publishsettings file path ex: d:\Free Trial.publishsettings"
-
+# WARNING
+# The above script still does not support adding VM to the same cloud service\existing cloud service, since the endpoints if already existing on the service
+# need to be load balanced, this option will be available in the future versions of the script.
 ##############################################################################################################################################

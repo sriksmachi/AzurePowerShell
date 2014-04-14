@@ -210,7 +210,7 @@ function CreateCloudService()
                 }
             }
         }
-        New-AzureService $targetCloudServiceName -Location $targetlocation -ErrorAction Stop
+        New-AzureService $targetCloudServiceName -Location $targetlocation -ErrorAction Stop | Out-Null
         Start-Sleep -Seconds 30        
     }
     else
@@ -260,7 +260,7 @@ function CreateStorageAccount()
                 }
             }
         }
-        New-AzureStorageAccount -StorageAccountName $targetStorageAccountName -Location $targetlocation -Label $targetStorageAccountName -ErrorAction Stop
+        New-AzureStorageAccount -StorageAccountName $targetStorageAccountName -Location $targetlocation -Label $targetStorageAccountName -ErrorAction Stop | Out-Null
         Start-Sleep -Seconds 30
     }
     else
@@ -283,7 +283,7 @@ function CreateOSDisk()
     {
         $diskName = "clonedvm" + (randomString(3)) + "vhd" 
     }
-    Add-AzureDisk -DiskName $diskName -MediaLocation $targetVMImage -OS $os
+    Add-AzureDisk -DiskName $diskName -MediaLocation $targetVMImage -OS $os | Out-Null
     Sleep -Seconds 20
     return $diskName
 }
@@ -326,7 +326,7 @@ function CreateOSDisk()
  $createOSDisk = CreateOSDisk -diskName $osDiskName -mediaLocaion $targetVMIMage -targetVMName $targetVMName -os $sourceVMInfoObject.OS
  
  Write-Verbose "Creating Virtual Machine"
- New-AzureVMConfig -Name $targetVMName -InstanceSize $sourceVMInfoObject.InstanceSize -DiskName $createOSDisk[1] -ErrorAction Stop `
+ New-AzureVMConfig -Name $targetVMName -InstanceSize $sourceVMInfoObject.InstanceSize -DiskName $createOSDisk -ErrorAction Stop `
   | New-AzureVM -ServiceName $targetCloudServiceName -WaitForBoot
 
  $counter = 1

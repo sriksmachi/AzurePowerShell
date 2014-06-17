@@ -325,34 +325,34 @@ function CreateOSDisk()
  $osDiskName = $targetVMName + "vhd"
  $createOSDisk = CreateOSDisk -diskName $osDiskName -mediaLocaion $targetVMIMage -targetVMName $targetVMName -os $sourceVMInfoObject.OS
  
- Write-Verbose "Creating Virtual Machine"
- New-AzureVMConfig -Name $targetVMName -InstanceSize $sourceVMInfoObject.InstanceSize -DiskName $createOSDisk -ErrorAction Stop `
-  | New-AzureVM -ServiceName $targetCloudServiceName -WaitForBoot
-
- $counter = 1
- if($sourceVMInfoObject.Disks -ne $null){
-     Write-Verbose "Attaching Disks"
-     $sourceVMInfoObject.Disks |
-     ForEach-Object {
-              $diskName = $_.DiskName + "-clone"
-              $targetdataImage = $destContext.BlobEndPoint + $targetStorageAccountContainer + "/" + $_.DiskName + "-clone.vhd"
-              Add-AzureDisk -DiskName $diskName -MediaLocation $targetdataImage -Label $diskName
-              Get-AzureVM $targetCloudServiceName -Name $targetVMName | Add-AzureDataDisk -Import -DiskName $diskName -LUN $counter | Update-AzureVM
-              $counter = $counter + 1
-     }
- }
-
- if($sourceVMInfoObject.Endpoints -ne $null){
-     Write-Verbose "Updating Endpoints"
-     $sourceVMInfoObject.Endpoints | ForEach-Object {
-         $endpointName = $_.Name
-         $endpointprotocol = $_.Protocol
-         $endpointLocalPort = $_.LocalPort
-         $endpointPublicPort = $_.Port
-             Get-AzureVM $targetCloudServiceName -Name $targetVMName | Add-AzureEndpoint -Name $endpointName -Protocol $endpointprotocol -LocalPort $endpointLocalPort -PublicPort $endpointPublicPort |`
-     Update-AzureVM -ErrorAction Continue
-      }
- }
+ #Write-Verbose "Creating Virtual Machine"
+ #New-AzureVMConfig -Name $targetVMName -InstanceSize $sourceVMInfoObject.InstanceSize -DiskName $createOSDisk -ErrorAction Stop `
+ # | New-AzureVM -ServiceName $targetCloudServiceName -WaitForBoot
+ #
+ #$counter = 1
+ #if($sourceVMInfoObject.Disks -ne $null){
+ #    Write-Verbose "Attaching Disks"
+ #    $sourceVMInfoObject.Disks |
+ #    ForEach-Object {
+ #             $diskName = $_.DiskName + "-clone"
+ #             $targetdataImage = $destContext.BlobEndPoint + $targetStorageAccountContainer + "/" + $_.DiskName + "-clone.vhd"
+ #             Add-AzureDisk -DiskName $diskName -MediaLocation $targetdataImage -Label $diskName
+ #             Get-AzureVM $targetCloudServiceName -Name $targetVMName | Add-AzureDataDisk -Import -DiskName $diskName -LUN $counter | Update-AzureVM
+ #             $counter = $counter + 1
+ #    }
+ #}
+ #
+ #if($sourceVMInfoObject.Endpoints -ne $null){
+ #    Write-Verbose "Updating Endpoints"
+ #    $sourceVMInfoObject.Endpoints | ForEach-Object {
+ #        $endpointName = $_.Name
+ #        $endpointprotocol = $_.Protocol
+ #        $endpointLocalPort = $_.LocalPort
+ #        $endpointPublicPort = $_.Port
+ #            Get-AzureVM $targetCloudServiceName -Name $targetVMName | Add-AzureEndpoint -Name $endpointName -Protocol $endpointprotocol -LocalPort $endpointLocalPort -PublicPort $endpointPublicPort |`
+ #    Update-AzureVM -ErrorAction Continue
+ #     }
+ #}
 
  if($sourceVMInfoObject.RoleState -eq "ReadyRole")
  {

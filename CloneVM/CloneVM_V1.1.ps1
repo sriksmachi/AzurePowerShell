@@ -68,7 +68,7 @@ function init(){
     }
 
     Import-AzurePublishSettingsFile -PublishSettingsFile $publishSettingsFilePath
-    Set-AzureSubscription -SubscriptionName $subscriptionName
+    Set-AzureSubscription -SubscriptionName $subscriptionName -CurrentStorageAccountName $targetStorageAccountName
     Select-AzureSubscription -SubscriptionName $subscriptionName
 }
 
